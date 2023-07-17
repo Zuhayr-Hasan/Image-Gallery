@@ -1,0 +1,154 @@
+/* Start of CSS code */
+
+*, *:after, *:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  color: white;
+  background: #131618;
+  font-family:  Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+// :focus {
+//   outline: 2px solid orange;
+// }
+
+button, a {
+  outline: 2px solid transparent;
+}
+
+button:focus,
+a:focus {
+  outline: 2px solid orange; 
+  box-shadow: 0 0 5px 0 orange; 
+}
+
+a:focus:not(:focus-visible), button:focus:not(:focus-visible) {
+    outline: 2px solid transparent;      
+    box-shadow: 0 0 5px 0 transparent;                                   
+} 
+
+img {
+  vertical-align: middle;
+}
+
+
+// Load Button styles
+
+#loadmore {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 10px;
+  border: 1px solid  #7B4162;
+  background: none;
+  color: #949494;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  cursor: pointer;
+
+  &:hover {
+    color: white; 
+  }
+}
+
+
+// Extra Stuff
+
+.auth-msg {
+  color:#e5e758;
+}
+
+.form-separator {
+  margin: 30px 0;
+  text-align: center;
+
+  p {
+    display: inline-block;
+    background: #333;
+    padding: 5px 20px;
+    border-radius: 100vh;
+    position: relative;
+    text-transform: uppercase;
+
+    &:after {
+      display: inline-block;
+      position: absolute;
+      content: "";
+      width: 150px;
+      height: 2px;
+      background: #333;
+      color: white;
+      top: 50%;
+      left: 100%;
+    }
+
+    &:before {
+      display: inline-block;
+      position: absolute;
+      content: "";
+      width: 150px;
+      height: 2px;
+      background: #333;
+      color: white;
+      top: 50%;
+      right: 100%;
+    }
+  }
+}
+
+.form-separator-large {
+  margin: 60px 0;
+  text-align: center;
+}
+
+label {
+  font-size: 14px;
+  font-weight: light;
+
+  input {
+    margin-top: 10px;
+  }
+
+  p {
+    margin: 0 !important;
+  }
+} 
+
+.less-important {
+  color: rgba(255,255,255, 0.6);
+}
+
+.center {
+  text-align: center;
+}
+
+.authPageLogo {
+  text-align:  left;
+  color: pink;
+  font-size: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+
+  @media screen and (max-width: 650px) {
+     text-align: center;
+  }
+
+  // @media screen and (max-width: 370px) {
+  // }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+// .success {
+  
+// }
