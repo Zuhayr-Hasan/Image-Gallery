@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { FcGoogle } from 'react-icons/fc'
 
+import { Link } from 'react-router-dom'
+
 const Button = styled.button`
   width: 100%;
   padding: 15px 0;
@@ -50,6 +52,7 @@ const Container = styled.div`
 `
 
 const Form = styled.form`
+  width: 500px;
   input {
     diplay: block;
     marign-bottom: 20px;
@@ -57,31 +60,31 @@ const Form = styled.form`
     width: 100%;
     border-radius: 5px;
     border: 1px solid #ccc;
-
   }
 `
 
-function Login() {
+function Signup() {
   return (
     <div>
-      <Container style={{ border: '2px dotted orchid' }}>
-        <h1>Login</h1>
+      <h1 className='authPageLogo'>Piczer</h1>
+      <Container>
+        <h1>Signup</h1>
         <div className='form-separator-large'></div>
+        <Button style={{ width: '500px' }}>
+          <FcGoogle
+            style={{
+              verticalAlign: 'middle',
+              fontSize: '25px',
+              marginRight: '10px',
+            }}
+          />
+          Login with Google
+        </Button>
+        <div className='form-separator'>
+          <p>Or</p>
+        </div>
 
-        <Form style={{ border: '2px dashed purple' }}>
-          <Button>
-            <FcGoogle
-              style={{
-                verticalAlign: 'middle',
-                fontSize: '25px',
-                marginRight: '10px',
-              }}
-            />
-            Login with Google
-          </Button>
-          <div className='form-separator'>
-            <p>Or</p>
-          </div>
+        <Form>
           <label>
             Email:
             <input
@@ -93,6 +96,7 @@ function Login() {
           </label>
           <label>
             Password:
+            <p style={{ float: 'right' }}>Forgot your password?</p>
             <input
               name='password'
               type='password'
@@ -100,13 +104,25 @@ function Login() {
               required
             />
           </label>
-          <Button color='white' bg='#7B4162' hv='#552340'>
-            Login
+          <Button
+            color='white'
+            bg='#7B4162'
+            hv='#552340'
+            style={{ marginTop: '40px' }}
+          >
+            Signup
           </Button>
+          <div className='form-separator'></div>
+          <p className='center'>
+            Already have an account?{' '}
+            <a>
+              <Link to="/">Login!</Link>
+            </a>
+          </p>
         </Form>
       </Container>
     </div>
   )
 }
 
-export default Login
+export default Signup
