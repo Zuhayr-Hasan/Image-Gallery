@@ -20,6 +20,29 @@ body {
   margin-top: 15px;
 }
 
+::placeholder {
+  // color: rgb(135, 135, 135);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+}
+
+.color-purple {
+  color: #7B83EB;
+  text-decoration: none;
+}
+
+.color-purple:hover {
+  text-decoration: underline;
+}
+
+.text-decoration {
+  text-decoration: none;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
+}
 // :focus {
 //   outline: 2px solid orange;
 // }
@@ -70,7 +93,12 @@ img {
 // Extra Stuff
 
 .auth-msg {
-  color:#e5e758;
+  color: #f6aac9;
+  display: flex;
+  align-items: center;
+  background: #4c2f36;
+  padding: 10px 50px;
+  border-radius: 5px;
 }
 
 .form-separator {
@@ -80,8 +108,8 @@ img {
   p {
     display: inline-block;
     background: #333;
-    padding: 5px 20px;
-    border-radius: 100vh;
+    // padding: 5px 20px;
+    // border-radius: 100vh;
     position: relative;
     text-transform: uppercase;
 
@@ -90,7 +118,7 @@ img {
       position: absolute;
       content: "";
       width: 150px;
-      height: 2px;
+      height: 1px;
       background: #333;
       color: white;
       top: 50%;
@@ -102,7 +130,7 @@ img {
       position: absolute;
       content: "";
       width: 150px;
-      height: 2px;
+      height: 1px;
       background: #333;
       color: white;
       top: 50%;
@@ -127,7 +155,11 @@ label {
   p {
     margin: 0 !important;
   }
-} 
+}
+
+.reset-less-imp-margin {
+  margin-top: 10px;
+}
 
 .less-important {
   color: rgba(255,255,255, 0.6);
@@ -138,11 +170,13 @@ label {
 }
 
 .authPageLogo {
-  text-align:  left;
+  text-align: left;
   color: pink;
   font-size: 20px;
-  margin-top: 20px;
+  // padding-top: 20px;
   margin-left: 20px;
+  // border: 2px solid red;
+  padding: 10px;
 
   @media screen and (max-width: 650px) {
      text-align: center;
@@ -160,3 +194,10 @@ label {
 // .success {
   
 // }
+
+// Authentication - Login
+
+
+// Authentication - Signup
+
+// Authentication - Reset

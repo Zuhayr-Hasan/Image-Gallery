@@ -1,5 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { BiSolidPaintRoll } from 'react-icons/bi';
+import { auth } from "../utils/firebase";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { BsCheck2Circle } from 'react-icons/bs';
+import handleResetError from '../utils/handleResetError'
+import { BiSolidError} from 'react-icons/bi';
+// import { BiSolidCheckCircle } from 'react-icons/bi';
+// import { BsCheckCircleFill } from 'react-icons/bs';
 
 const Button = styled.button`
   width: 100%;
@@ -7,7 +16,7 @@ const Button = styled.button`
   background: ${(props) => props.bg || '#fff'};
   color: ${(props) => props.color || '#000'};
   border: 0;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background 200ms ease-in-out;
   font-weight: bold;
@@ -39,7 +48,7 @@ const Container = styled.div`
     }
 
     p {
-      margin-bottom: 20px;
+      margin-bottom: -10px;
 
       a {
         color: #aaa;
@@ -49,44 +58,105 @@ const Container = styled.div`
 `
 
 const Form = styled.form`
+  width: 400px;
   input {
     diplay: block;
+    background: #242424;
+    color: #f0f0f0;
     marign-bottom: 20px;
-    padding: 10px 15px;
+    padding: 15px 15px;
     width: 100%;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border-radius: 10px;
+    height: 45px;
+    border: 0;
+    font-size: 16px;
+    outline: none;
+
+    &:hover {
+      background: #2b2b2b;
+    }
+    &:focus {
+      border: 2px solid #464EB8;
+    }
   }
 `
 
+const SuccessMessage = styled.p`
+  background: #2d492d;
+  color: #a9f5a9;
+  font-size: 16px;
+  text-align: center;
+  width: 435px;
+  border-radius: 5px;
+  padding: 10px 15px;
+`
+
 function Reset() {
+  const [emailVarification, setEmailVarification] = useState("");
+  const [resetVarification, setresetVarification] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleEmailVarification  = async (e) => {
+    e.preventDefault();
+
+    sendPasswordResetEmail(auth, emailVarification)
+    .then(() => {
+      console.log("email sent")
+      setresetVarification(true)
+      setTimeout(() => {
+        navigate('/')
+      }, 5000)
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log('reset error: ', errorCode, errorMessage);
+      const errorMsg = handleResetError(error);
+      setError(errorMsg);
+    });
+  }
+
   return (
-    <div>
-      <h1 className='authPageLogo'>Piczer</h1>
-      <Container>
+    <div style={{ height: '100vh' }}>
+      {/* <h1 className='authPageLogo'>Piczer</h1> */}
+      <h1 className='authPageLogo vertical-center' style={{color: '#7B83EB', height: '10%' }}>
+        <BiSolidPaintRoll style={{marginRight: '15px', width: '30px', height: '30px'}}/>
+        Piczer
+      </h1>
+      <Container style={{height: '90%'}}>
         <div>
+          { error && <p className='auth-msg' style={{marginBottom: '15px', borderRadius: '5px'}}><BiSolidError style={{color: "#ff3769", width: '25px', height: '25px', marginRight: 15}}/> {error}</p> }
+          {resetVarification && 
+          <SuccessMessage className='vertical-center' style={{marginBottom: '15px'}}>
+            <BsCheck2Circle style={{width: '25px', height: '25px', marginRight: '15px'}} />
+            An email with a password reset link has been sent.
+          </SuccessMessage>}
           <h1>Forgot your password?</h1>
-          <p className='less-important'>
+          <p className='less-important reset-less-imp-margin'>
             Please type your email below to receive a link to reset your
             password.
           </p>
           <div className='form-separator'></div>
-          <Form>
+          <Form onSubmit={handleEmailVarification}>
             <input
               name='email'
               type='email'
-              placeholder='Type your email'
+              placeholder='example@gmail.com'
               required
+              onChange={(e) => setEmailVarification(e.target.value)}
             />
             <Button
               color='white'
-              bg='#7B4162'
-              hv='#552340'
-              style={{ marginTop: '30px' }}
+              bg="#505AC9"
+              hv='#464EB8'
+              style={{ marginTop: '25px' }}
             >
-              Send Password Reset Email
+              Reset Password
             </Button>
+         
           </Form>
+         
         </div>
       </Container>
     </div>

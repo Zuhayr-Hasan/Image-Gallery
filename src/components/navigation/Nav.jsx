@@ -1,14 +1,21 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { auth } from "../../utils/firebase";
+import { signOut } from 'firebase/auth'
 
 import { Container, Header, Navigation } from './navStyles'
 
 function Nav() {
   const navigate = useNavigate()
 
-  const logout = () => {
-    navigate('/')
-  }
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <Container>

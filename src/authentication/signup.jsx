@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FcGoogle } from 'react-icons/fc'
+import { BiSolidPaintRoll } from 'react-icons/bi';
 
 import { Link } from 'react-router-dom'
 
@@ -10,7 +11,7 @@ const Button = styled.button`
   background: ${(props) => props.bg || '#fff'};
   color: ${(props) => props.color || '#000'};
   border: 0;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background 200ms ease-in-out;
   font-weight: bold;
@@ -52,25 +53,37 @@ const Container = styled.div`
 `
 
 const Form = styled.form`
-  width: 500px;
+  width: 400px;
   input {
     diplay: block;
+    background: #242424;
+    color: #f0f0f0;
     marign-bottom: 20px;
-    padding: 10px 15px;
+    padding: 15px 15px;
     width: 100%;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border-radius: 10px;
+    height: 45px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+
+    &:hover {
+      background: #2b2b2b;
+    }
   }
 `
 
 function Signup() {
   return (
-    <div>
-      <h1 className='authPageLogo'>Piczer</h1>
-      <Container>
-        <h1>Signup</h1>
+    <div style={{ height: '100vh' }}>
+       <h1 className='authPageLogo vertical-center' style={{color: '#7B83EB', height: '10%' }}>
+        <BiSolidPaintRoll style={{marginRight: '15px', width: '30px', height: '30px'}}/>
+        Piczer
+      </h1>
+      <Container style={{height: '90%'}}>
+        <h1 style={{marginTop: '60px'}}>Signup</h1>
         <div className='form-separator-large'></div>
-        <Button style={{ width: '500px' }}>
+        <Button bg={'#242424'} hv={'#2b2b2b'} color={'rgba(255, 255, 255, 0.6)'} style={{ width: '400px', marginTop: '-90px', padding: '15px 10px' }}>
           <FcGoogle
             style={{
               verticalAlign: 'middle',
@@ -81,11 +94,11 @@ function Signup() {
           Login with Google
         </Button>
         <div className='form-separator'>
-          <p>Or</p>
+          <p></p>
         </div>
 
         <Form>
-          <label>
+          <label style={{color: '#f0f0f0'}}>
             Email:
             <input
               name='email'
@@ -94,9 +107,9 @@ function Signup() {
               required
             />
           </label>
-          <label>
+          <label style={{ marginTop: 30, color: '#f0f0f0'}}>
             Password:
-            <p style={{ float: 'right' }}>Forgot your password?</p>
+
             <input
               name='password'
               type='password'
@@ -106,17 +119,17 @@ function Signup() {
           </label>
           <Button
             color='white'
-            bg='#7B4162'
-            hv='#552340'
-            style={{ marginTop: '40px' }}
+            bg="#505AC9"
+            hv='#464EB8'
+            style={{ marginTop: '25px' }}
           >
-            Signup
+            Continue
           </Button>
           <div className='form-separator'></div>
-          <p className='center'>
-            Already have an account?{' '}
+          <p className='center' style={{marginTop: '-10px'}}>
+            Member already?{' '}
             <a>
-              <Link to="/">Login!</Link>
+              <Link className="color-purple" to="/">Click to login.</Link>
             </a>
           </p>
         </Form>
