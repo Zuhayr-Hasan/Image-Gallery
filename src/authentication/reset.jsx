@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
-import { BiSolidPaintRoll } from 'react-icons/bi';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { BiSolidPaintRoll } from "react-icons/bi";
 import { auth } from "../utils/firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { BsCheck2Circle } from 'react-icons/bs';
-import handleResetError from '../utils/handleResetError'
-import { BiSolidError} from 'react-icons/bi';
-// import { BiSolidCheckCircle } from 'react-icons/bi';
-// import { BsCheckCircleFill } from 'react-icons/bs';
+import { BsCheck2Circle } from "react-icons/bs";
+import handleResetError from "../utils/handleResetError";
+import { BiSolidError } from "react-icons/bi";
+import { BiSolidCheckCircle } from "react-icons/bi";
+import { BsCheckCircleFill } from "react-icons/bs";
 
 const Button = styled.button`
   width: 100%;
   padding: 15px 0;
-  background: ${(props) => props.bg || '#fff'};
-  color: ${(props) => props.color || '#000'};
+  background: ${(props) => props.bg || "#fff"};
+  color: ${(props) => props.color || "#000"};
   border: 0;
   border-radius: 10px;
   cursor: pointer;
@@ -22,13 +22,13 @@ const Button = styled.button`
   font-weight: bold;
 
   &:hover {
-    background: ${(props) => props.hv || 'rgba(255, 255, 255, 0.8)'};
+    background: ${(props) => props.hv || "rgba(255, 255, 255, 0.8)"};
   }
 
   > * {
     pointer-events: none;
   }
-`
+`;
 
 const Container = styled.div`
   display: flex;
@@ -40,8 +40,7 @@ const Container = styled.div`
   margin-top: -40px;
 
   div {
-    width: 100%;
-    max-width: 350px;
+    width: 450px;
 
     @media screen and (max-width: 370px) {
       max-width: 300px;
@@ -55,7 +54,7 @@ const Container = styled.div`
       }
     }
   }
-`
+`;
 
 const Form = styled.form`
   width: 400px;
@@ -76,10 +75,10 @@ const Form = styled.form`
       background: #2b2b2b;
     }
     &:focus {
-      border: 2px solid #464EB8;
+      border: 2px solid #464eb8;
     }
   }
-`
+`;
 
 const SuccessMessage = styled.p`
   background: #2d492d;
@@ -89,7 +88,7 @@ const SuccessMessage = styled.p`
   width: 435px;
   border-radius: 5px;
   padding: 10px 15px;
-`
+`;
 
 function Reset() {
   const [emailVarification, setEmailVarification] = useState("");
@@ -97,70 +96,102 @@ function Reset() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleEmailVarification  = async (e) => {
+  const handleEmailVarification = async (e) => {
     e.preventDefault();
 
     sendPasswordResetEmail(auth, emailVarification)
-    .then(() => {
-      console.log("email sent")
-      setresetVarification(true)
-      setTimeout(() => {
-        navigate('/')
-      }, 5000)
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log('reset error: ', errorCode, errorMessage);
-      const errorMsg = handleResetError(error);
-      setError(errorMsg);
-    });
-  }
+      .then(() => {
+        console.log("email sent");
+        setresetVarification(true);
+        setError(null);
+        setTimeout(() => {
+          navigate("/");
+        }, 5000);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("reset error: ", errorCode, errorMessage);
+        const errorMsg = handleResetError(error);
+        setError(errorMsg);
+      });
+  };
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: "100vh" }}>
       {/* <h1 className='authPageLogo'>Piczer</h1> */}
-      <h1 className='authPageLogo vertical-center' style={{color: '#7B83EB', height: '10%' }}>
-        <BiSolidPaintRoll style={{marginRight: '15px', width: '30px', height: '30px'}}/>
+      <h1
+        className="authPageLogo vertical-center"
+        style={{ color: "#7B83EB", height: "10%" }}
+      >
+        <BiSolidPaintRoll
+          style={{ marginRight: "15px", width: "30px", height: "30px" }}
+        />
         Piczer
       </h1>
-      <Container style={{height: '90%'}}>
+      <Container style={{ height: "90%" }}>
+        {error && (
+          <p
+            className="auth-msg"
+            style={{ marginBottom: "15px", borderRadius: "5px" }}
+          >
+            <BiSolidError
+              style={{
+                color: "#ff3769",
+                width: "25px",
+                height: "25px",
+                marginRight: 15,
+              }}
+            />{" "}
+            {error}
+          </p>
+        )}
         <div>
-          { error && <p className='auth-msg' style={{marginBottom: '15px', borderRadius: '5px'}}><BiSolidError style={{color: "#ff3769", width: '25px', height: '25px', marginRight: 15}}/> {error}</p> }
-          {resetVarification && 
-          <SuccessMessage className='vertical-center' style={{marginBottom: '15px'}}>
-            <BsCheck2Circle style={{width: '25px', height: '25px', marginRight: '15px'}} />
-            An email with a password reset link has been sent.
-          </SuccessMessage>}
+          {resetVarification && (
+            <SuccessMessage
+              className="vertical-center"
+              style={{ marginBottom: "15px" }}
+            >
+              <BiSolidCheckCircle
+                style={{
+                  width: "25px",
+                  height: "25px",
+                  marginRight: "15px",
+                  fill: "#31e22f",
+                }}
+              />
+              An email with a password reset link has been sent.
+            </SuccessMessage>
+          )}
           <h1>Forgot your password?</h1>
-          <p className='less-important reset-less-imp-margin'>
+          <p className="less-important reset-less-imp-margin">
             Please type your email below to receive a link to reset your
             password.
           </p>
-          <div className='form-separator'></div>
+          <div className="form-separator"></div>
           <Form onSubmit={handleEmailVarification}>
             <input
-              name='email'
-              type='email'
-              placeholder='example@gmail.com'
+              name="email"
+              type="email"
+              placeholder="someone@example.com"
               required
               onChange={(e) => setEmailVarification(e.target.value)}
             />
             <Button
-              color='white'
+              color="white"
               bg="#505AC9"
-              hv='#464EB8'
-              style={{ marginTop: '25px' }}
+              hv="#464EB8"
+              style={{ marginTop: "25px" }}
             >
               Reset Password
             </Button>
-         
+
           </Form>
-         
+          
         </div>
       </Container>
     </div>
-  )
+  );
 }
 
-export default Reset
+export default Reset;

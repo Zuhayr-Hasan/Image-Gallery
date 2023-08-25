@@ -7,7 +7,7 @@ const handleResetErrors = (err) => {
       case "auth/operation-not-allowed":
         return "Sorry, not accepting any more signups using this method."
      default:
-        return "If the email exists, you'll get a reset link in your inbox soon."
+        return "If the email exists, expect a reset link soon."
     }
   } 
   
