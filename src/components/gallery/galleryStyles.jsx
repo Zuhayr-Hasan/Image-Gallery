@@ -3,52 +3,52 @@ import styled from 'styled-components'
 export const Wrapper = styled.div``;
 
 export const Container = styled.div`
- margin: 50px auto;
- column-count: 3;
- column-gap: 20px;
+  margin: 50px auto;
+  column-count: 3;
+  column-gap: 20px;
 
- #wrapper {
-  position: relative;
+  #wrapper {
+    position: relative;
 
-  #overlay {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
-    pointer-events: none;
+    #overlay {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      pointer-events: none;
 
-   button {
-    pointer-events: auto;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 0;
-    cursor: pointer;
+      button {
+        pointer-events: auto;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 0;
+        cursor: pointer;
 
-    > * {
-     pointer-events: none;
+        > * {
+          pointer-events: none;
+        }
+      }
     }
-   }
-  }
 
-  &:hover > #overlay {
-   display: block;
+    &:hover > #overlay {
+      display: block;
+    }
   }
- }
 
   #media screen and (max-width: 1000px) {
-   column-count: 2;
+    column-count: 2;
   }
 
   @media screen and (max-width: 750px) {
-   column-count: 1;
+    column-count: 1;
   }
-`
+`;
 
 export const Image = styled.div`
   margin-bottom: 20px;

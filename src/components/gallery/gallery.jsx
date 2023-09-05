@@ -34,31 +34,29 @@ function Gallery() {
       });
   }, []);
 
-  const handleDelete = (e) => {
-    if (e.target.classList.contains("delete-item")) {
-      const userId = e.target.id;
-      const desertRef = ref(storage, `images/gallery1.jpg`);
+  const handleDelete = (item) => {
+    const desertRef = ref(storage, item);
 
-      // Delete the file
-      deleteObject(desertRef)
-        .then(() => {
-          // File deleted successfully
-          console.log("file deleted successfully.. 😉");
+    deleteObject(desertRef)
+      .then(() => {
+        // console.log("file deleted successfully.. 😉");
+        // setGallery((prevGallery) => prevGallery.filter((_, i) => i !== item));
 
-          // setGallery((prevGallery) =>
-          //   prevGallery.filter((galleryItem) => galleryItem !== item)
-          // );
-        })
-        .catch((error) => {
-          // Uh-oh, an error occurred!
-          console.log("file is not deleted 😭", error);
-        });
-    }
+        const index = gallery.findIndex((galleryItem) => galleryItem === item);
+
+        // Create a new array without the deleted item
+        if (index !== -1) {
+          const updatedGallery = [...gallery];
+          updatedGallery.splice(index, 1);
+          setGallery(updatedGallery);
+        }
+      })
+      .catch((error) => {
+        console.log("file is not deleted 😭", error);
+      });
   };
 
   console.log("this is gallery", gallery);
-
-  console.log("this is id", auth.currentUser);
 
   return (
     <React.Fragment>
@@ -66,7 +64,7 @@ function Gallery() {
       <Container
         initial="hidden"
         variants={containerVariant}
-        onClick={handleDelete}
+        // onClick={handleDelete}
       >
         {loading ? (
           <ThreeDots
@@ -93,7 +91,10 @@ function Gallery() {
               </div>
 
               <div id="overlay">
-                <button id={id} className="delete-item">
+                <button
+                  className="delete-item"
+                  onClick={() => handleDelete(item)}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
