@@ -32,12 +32,14 @@ export const Overlay = styled.div`
 `;
 
 export const Container = styled.div`
+  // border: 2px solid red;
   background: #222;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
+  height: 90%;
   max-width: 800px;
   display: flex;
   flex-direction: column;
@@ -54,6 +56,7 @@ export const Options = styled.div`
   align-items: center;
   justify-content: flex-end;
   margin: 15px;
+  // border: 2px solid green;
 
   > a {
     color: white;
@@ -86,12 +89,16 @@ export const Options = styled.div`
 export const Img = styled.div`
   position: relative;
   width: 100%;
+  height: 100%;
   overflow: hidden;
+  // border: 2px solid red;
 
   img {
+    // border: 2px solid red;
     position: absolute;
     width: 100%;
     height: 100%;
+    // object-fit: contain;
     left: 0;
   }
 `;

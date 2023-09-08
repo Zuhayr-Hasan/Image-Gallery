@@ -1,8 +1,13 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
+// import ReactDOM from "react-dom/client";
+// import createPortal from "react-dom/client";
+
 import { db } from "../../utils/firebase";
 import { auth, storage } from "../../utils/firebase";
 import { ref, listAll, getDownloadURL, deleteObject } from "firebase/storage";
+
 import { ThreeDots } from "react-loader-spinner";
 import Modal from "../modal/modal";
 import {
@@ -16,8 +21,20 @@ import {
 function Gallery() {
   const [gallery, setGallery] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [modal, setModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
+  // const imageRef = useRef(null)
+  console.log("i am selected image", selectedImage);
   const storageRef = ref(storage, "images/");
+
+  const openModal = () => {
+    setModal(true);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+    // console.log("close the modal yahoo...");
+  };
 
   useEffect(() => {
     listAll(storageRef)
@@ -34,33 +51,54 @@ function Gallery() {
       });
   }, []);
 
-  const handleDelete = (item) => {
-    const desertRef = ref(storage, item);
+  const handleDelete = (e, item) => {
+    console.log("delete-item checked");
+    console.log(e.target.className);
+    if (e.target.className == "delete-item") {
+      // setGallery([])
 
-    deleteObject(desertRef)
-      .then(() => {
-        // console.log("file deleted successfully.. 😉");
-        // setGallery((prevGallery) => prevGallery.filter((_, i) => i !== item));
+      openModal();
+      if (modal) {
+        const desertRef = ref(storage, item);
 
-        const index = gallery.findIndex((galleryItem) => galleryItem === item);
-
-        // Create a new array without the deleted item
-        if (index !== -1) {
-          const updatedGallery = [...gallery];
-          updatedGallery.splice(index, 1);
-          setGallery(updatedGallery);
-        }
-      })
-      .catch((error) => {
-        console.log("file is not deleted 😭", error);
-      });
+        deleteObject(desertRef)
+          .then(() => {
+            // console.log("file deleted successfully.. 😉");
+            // setGallery((prevGallery) => prevGallery.filter((_, i) => i !== item));
+            const index = gallery.findIndex(
+              (galleryItem) => galleryItem === item
+            );
+            // Create a new array without the deleted item
+            if (index !== -1) {
+              const updatedGallery = [...gallery];
+              updatedGallery.splice(index, 1);
+              setGallery(updatedGallery);
+            }
+          })
+          .catch((error) => {
+            console.log("file is not deleted 😭", error);
+          });
+      }
+    }
   };
 
-  console.log("this is gallery", gallery);
+  // console.log("this is gallery", gallery);
 
+  const hangeImageUrl = (e, item) => {
+    // const item = e.target.key;
+    console.log(item);
+    openModal();
+    setSelectedImage(item);
+  };
+  // console.log(selectedImage);
+  // const handleImageSelect = (imageUrl) => {
+  //   setSelectedImage(imageUrl);
+  //   console.log(selectedImage);
+  // };
+  console.log(modal);
   return (
     <React.Fragment>
-      {/* <Modal /> */}
+
       <Container
         initial="hidden"
         variants={containerVariant}
@@ -83,17 +121,25 @@ function Gallery() {
           />
         ) : (
           gallery.map((item, id) => (
-            <Wrapper id="wrapper" key={id}>
+            <Wrapper
+              id="wrapper"
+              key={id}
+              onClick={(e) => hangeImageUrl(e, item)}
+            >
               <div style={{ display: "block" }}>
                 <Image variants={imgVariant}>
-                  <img className="lazyload" src={item} />
+                  <img
+                    className="lazyload"
+                    src={item}
+                    // onClick={handleImageSelect(item)}
+                  />
                 </Image>
               </div>
 
               <div id="overlay">
                 <button
                   className="delete-item"
-                  onClick={() => handleDelete(item)}
+                  onClick={(e) => handleDelete(e, item)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -117,6 +163,15 @@ function Gallery() {
             </Wrapper>
           ))
         )}
+        {modal &&
+          createPortal(
+            <Modal
+              onclose={closeModal}
+              isOpen={modal}
+              imageUrl={selectedImage}
+            />,
+            document.body
+          )}
       </Container>
     </React.Fragment>
   );

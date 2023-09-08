@@ -1,9 +1,15 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { Container, Img, Overlay, Options } from "./modalStyles";
+import { BiSolidDownload } from "react-icons/bi";
 
 // import ReactConfirmAlert, { confirmAlert } from "react-confirm-alert";
 
-function Modal() {
+function Modal({ isOpen, onclose, imageUrl }) {
+  if (!isOpen) return null;
+
+  console.log(imageUrl);
+  console.log("from modal", isOpen);
+
   return (
     <Overlay className="overlay">
       <button
@@ -14,6 +20,7 @@ function Modal() {
           padding: "10px",
         }}
         className="close"
+        onClick={onclose}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +43,9 @@ function Modal() {
         <Options>
           <React.Fragment>
             <React.Fragment>
-              <a>Download Image</a>
+              <BiSolidDownload
+                style={{ width: "24px", height: "24px", marginRight: "5px", fill: '#fff' }}
+              />
               <button className="delete-item">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -63,12 +72,13 @@ function Modal() {
           <img
             className="lazyload"
             data-sizes="auto"
-            // src={genLowUrl(img.filename)}
+            // src="https://wallpapers.com/images/featured/starfield-pvuq8jqs3z1dzalb.jpg"
+            src={imageUrl}
             // data-src={genUrl(img.filename)}
             // data-srcset={genSrcset(img.filename)}
-            alt=""
+            alt="image"
           />
-          <div></div>
+          {/* <div>asdfdwedewewfewf</div> */}
         </Img>
       </Container>
     </Overlay>
